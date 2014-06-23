@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Counter Example</title>
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<style>
 		body { padding-top: 50px; }
 		[data-counter-value] {
@@ -20,9 +20,13 @@
 </head>
 <body>
 	<div class="container">
+		<h1>Counter</h1>
+		<hr/>
+
 		<div class="row">
-			<div data-counter-value>0</div>
+			<div data-counter-value></div>
 		</div>
+		<hr/>
 
 		<div class="row">
 			<div class="col-xs-6">
@@ -31,6 +35,11 @@
 			<div class="col-xs-6">
 				<button class="btn btn-lg btn-danger btn-block" data-dec>-1</button>
 			</div>
+		</div>
+		<hr/>
+
+		<div class="row" style="text-align: center;">
+			<button class="btn btn-lg btn-default" data-reset>Reset</button>
 		</div>
 	</div>
 
@@ -48,27 +57,51 @@
 					ctr--;
 				},
 
+				reset: function() {
+					ctr = 0;
+				},
+
 				getValue: function() {
 					return ctr;
 				}
 			};
 		}());
 
-		function updateUI() {
-			$('[data-counter-value]').html(counter.getValue());
-		}
+		var ui = (function() {
+			
+			function update() {
+				$('[data-counter-value]').html(counter.getValue());
+			}
 
-		$('[data-inc]').click(function() {
-			counter.inc();
-			updateUI();
-		});
+			function init() {
+				$('[data-inc]').click(function() {
+					counter.inc();
+					update();
+				});
 
-		$('[data-dec]').click(function() {
-			counter.dec();
-			updateUI();
-		});
+				$('[data-dec]').click(function() {
+					counter.dec();
+					update();
+				});
 
-		updateUI();
+				$('[data-reset]').click(function() {
+					counter.reset();
+					update();
+				});
+			}
+
+			return {
+				init: init,
+				update: update
+			};
+		}());
+
+
+		(function() {
+			ui.init();
+			ui.update();
+			counter.reset();
+		}());
 	</script>
 </body>
 </html>

@@ -2,17 +2,24 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		
 		requirejs: {
-			compile: {
+			options: {
+				baseUrl: "js",
+				name: "lib/require.min",
+				paths: {
+					jquery: 'lib/jquery.min',
+					pubsub: 'lib/pubsub.min'
+				},
+				include: ['main'],
+				out: "main.built.js"
+			},
+			dev: {
 				options: {
-					baseUrl: "js",
-					name: "lib/require.min",
-					paths: {
-						jquery: 'lib/jquery.min',
-						pubsub: 'lib/pubsub.min'
-					},
-					include: ['main'],
-					out: "main.built.js",
 					optimize: 'none'
+				}
+			},
+			release: {
+				options: {
+					optimize: 'uglify2'
 				}
 			}
 		},
@@ -21,7 +28,7 @@ module.exports = function(grunt) {
 			dev: {
 				options: {
 					hostname: '0.0.0.0',
-					port: 3000,
+					port: 8800,
 					base: '.',
 					livereload: true
 				}
@@ -34,12 +41,15 @@ module.exports = function(grunt) {
 				spawn: false
 			},
 
-			assemble: {
-				files: ['*.html', '*.hbs'],
-				tasks: ['generateHtml']
+			js: {
+				files: ['js/**/*.js'],
+				tasks: ['requirejs:dev']
 			}
 		}
 	});
+
+	grunt.registerTask('default', ['requirejs:release']);
+	grunt.registerTask('dev', ['requirejs:dev', 'connect', 'watch']);
 
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-connect');

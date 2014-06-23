@@ -50,9 +50,12 @@
 		</div>
 		<hr/>
 
-		<div class="row" style="text-align: center;">
+		<div class="row text-center">
 			<button class="btn btn-lg btn-default" data-reset>Reset</button>
 		</div>
+		<hr/>
+
+		<div data-delta class="text-center"></div>
 	</div>
 
 	<script src="lib/jquery.min.js"></script>
@@ -76,23 +79,25 @@
 				return str.replace(/^\s+|\s+$/g, '');
 			}
 
-			return {
-				parseNumber: function(value) {
-					value = value || '';
-					value = trim('' + value);
+			function parseNumber(value) {
+				value = value || '';
+				value = trim('' + value);
 
-					if (nums[value]) {
-						return nums[value];
-					}
-
-					var x = parseFloat(value);
-
-					if (!isNaN(x)) {
-						return x;
-					}
-
-					return 0;
+				if (nums[value]) {
+					return nums[value];
 				}
+
+				var x = parseFloat(value);
+
+				if (!isNaN(x)) {
+					return x;
+				}
+
+				return 0;
+			}
+
+			return {
+				parseNumber: parseNumber
 			};
 		}());
 
@@ -102,69 +107,91 @@
 			return {
 				inc: function(value) {
 					ctr += (parser.parseNumber(value) || 1);
-					PubSub.publish('valueChanged', ctr);
+					PubSub.publish('counterValueChanged', ctr);
 				},
 
 				dec: function(value) {
 					ctr -= (parser.parseNumber(value) || 1);
-					PubSub.publish('valueChanged', ctr);
+					PubSub.publish('counterValueChanged', ctr);
 				},
 
 				reset: function() {
 					ctr = 0;
-					PubSub.publish('valueChanged', ctr);
+					PubSub.publish('counterValueReset', ctr);
 				},
 
 				getValue: function() {
-					return ctr;
+					return ctr.toFixed(2);
 				}
 			};
 		}());
 
-		PubSub.subscribe('user/inc', function(value) {
-			counter.inc(value);
-		});
-
-		PubSub.subscribe('user/dec', function(value) {
-			counter.dec(value);
-		});
-
-		PubSub.subscribe('reset', function() {
-			counter.reset();
-		});
-
-		/* --- */
-
-		(function() {
-			function updateUI(newValue) {
-				$('[data-counter-value]').html(newValue);
+		var ui = (function() {
+			
+			function update() {
+				$('[data-counter-value]').html(counter.getValue());
 			}
 
-			$('[data-inc]').click(function() {
-				var value = $(this).data('inc');
-				PubSub.publish('user/inc', value);
+			function init() {
+				$('[data-inc]').click(function() {
+					var value = $(this).data('inc');
+					counter.inc(value);
+					update();
+				});
+
+				$('[data-dec]').click(function() {
+					var value = $(this).data('dec');
+					counter.dec(value);
+					update();
+				});
+
+				$('[data-custom-increment]').submit(function() {
+					var value = $(this).find('input').val();
+					counter.inc(value);
+					update();
+
+					return false;
+				});
+
+				$('[data-reset]').click(function() {
+					counter.reset();
+					update();
+				});
+			}
+
+			return {
+				init: init,
+				update: update
+			};
+		}());
+
+		var delta = (function() {
+			var lastValue;
+			var el = $('[data-delta]');
+
+			function formatNumber(num) {
+				return num.toFixed(2);
+			}
+
+			function showDelta(delta) {
+				el.text('Counter value was lastly changed by: ' + formatNumber(delta));
+			}
+
+			PubSub.subscribe('counterValueReset', function(initialValue) {
+				lastValue = 0;
+				el.text('Counter value was reset to: ' + formatNumber(initialValue));
 			});
 
-			$('[data-dec]').click(function() {
-				var value = $(this).data('dec');
-				PubSub.publish('user/dec', value);
+			PubSub.subscribe('counterValueChanged', function(newValue) {
+				showDelta(newValue - lastValue);
+				lastValue = newValue;
 			});
+		}());
 
-			$('[data-custom-increment]').submit(function() {
-				var value = $(this).find('input').val();
-				PubSub.publish('user/inc', value);
-				return false;
-			});
-
-			$('[data-reset]').click(function() {
-				PubSub.publish('reset');
-			});
-
-			PubSub.subscribe('valueChanged', function(newValue) {
-				updateUI(newValue);
-			});
-
-			PubSub.publish('reset');
+		(function() {
+			ui.init();
+			ui.update();
+			counter.reset();
 		}());
 	</script>
 </body>

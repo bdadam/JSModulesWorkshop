@@ -48,6 +48,11 @@
   				<button type="submit" class="btn btn-default btn-lg">Increment by value</button>
 			</form>
 		</div>
+		<hr/>
+
+		<div class="row" style="text-align: center;">
+			<button class="btn btn-lg btn-default" data-reset>Reset</button>
+		</div>
 	</div>
 
 	<script src="lib/jquery.min.js"></script>
@@ -70,23 +75,25 @@
 				return str.replace(/^\s+|\s+$/g, '');
 			}
 
-			return {
-				parseNumber: function(value) {
-					value = value || '';
-					value = trim('' + value);
+			function parseNumber(value) {
+				value = value || '';
+				value = trim('' + value);
 
-					if (nums[value]) {
-						return nums[value];
-					}
-
-					var x = parseFloat(value);
-
-					if (!isNaN(x)) {
-						return x;
-					}
-
-					return 0;
+				if (nums[value]) {
+					return nums[value];
 				}
+
+				var x = parseFloat(value);
+
+				if (!isNaN(x)) {
+					return x;
+				}
+
+				return 0;
+			}
+
+			return {
+				parseNumber: parseNumber
 			};
 		}());
 
@@ -102,37 +109,61 @@
 					ctr -= (parser.parseNumber(value) || 1);
 				},
 
+				reset: function() {
+					ctr = 0;
+				},
+
 				getValue: function() {
-					return ctr;
+					return ctr.toFixed(2);
 				}
 			};
 		}());
 
-		function updateUI() {
-			$('[data-counter-value]').html(counter.getValue());
-		}
+		var ui = (function() {
+			
+			function update() {
+				$('[data-counter-value]').html(counter.getValue());
+			}
 
-		$('[data-inc]').click(function() {
-			var value = $(this).data('inc');
-			counter.inc(value);
-			updateUI();
-		});
+			function init() {
+				$('[data-inc]').click(function() {
+					var value = $(this).data('inc');
+					counter.inc(value);
+					update();
+				});
 
-		$('[data-dec]').click(function() {
-			var value = $(this).data('dec');
-			counter.dec(value);
-			updateUI();
-		});
+				$('[data-dec]').click(function() {
+					var value = $(this).data('dec');
+					counter.dec(value);
+					update();
+				});
 
-		$('[data-custom-increment]').submit(function() {
-			var value = $(this).find('input').val();
-			counter.inc(value);
-			updateUI();
+				$('[data-custom-increment]').submit(function() {
+					var value = $(this).find('input').val();
+					counter.inc(value);
+					update();
 
-			return false;
-		});
+					return false;
+				});
 
-		updateUI();
+				$('[data-reset]').click(function() {
+					counter.reset();
+					update();
+				});
+			}
+
+			return {
+				init: init,
+				update: update
+			};
+		}());
+
+
+		(function() {
+			ui.init();
+			ui.update();
+			counter.reset();
+		}());
 	</script>
 </body>
 </html>
