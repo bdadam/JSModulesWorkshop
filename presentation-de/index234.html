@@ -30,7 +30,7 @@
 <body>
 	<div class="reveal">
 		<div class="slides">
-<section>
+			<section>
 	<h1>Modularisierung mit RequireJS und Browserify</h1>
 	<p><a target="_blank" href="http://bdadam.com">Adam Beres-Deak</a> / <a target="_blank" href="http://twitter.com/bdadamm">@bdadamm</a></p>
 </section>
@@ -61,7 +61,7 @@
 	1.4.9
 	```
 </section>
-<section>
+			<section>
 	<section><h2>Agenda</h2></section>
 	
 	<section>
@@ -105,7 +105,7 @@
 		<h2>Recap</h2>
 	</section>
 </section>
-<section>
+			<section>
 	<section>
 		<h2>Warum modularisieren?</h2>
 	</section>
@@ -143,6 +143,8 @@
 	<section>
 		TODO: SCREENSHOT
 	</section>
+</section>
+<section>
 	<section>
 		<h2>Was ist eine Module?</h2>
 	</section>
@@ -157,6 +159,7 @@
 		</ul>
 	</section>
 </section>
+
 <section>
 	<section>
 		<h2>The Module Pattern</h2>
@@ -164,8 +167,10 @@
 	<section data-markdown>
 		```JavaScript
 		MyProject = {};
+
 		MyProject.MyModule = function() {
 			var privateVariable = 42;
+
 			function privateFunction() { return privateVariable; }
 
 			return {
@@ -292,85 +297,11 @@
 		```
 	</section>
 </section>
-
-<section>
-	<section data-markdown>
-		## Browserify
-		
-		* Compiler für Node-style CommmonJS Module
-		* Ermöglicht `require()` Aufrufe im Browser (wie in Node)
-		* Viele Node-Module können verwendet werden
-	</section>
-	<section>
-		<h2>Grundlagen</h2>
-		<p>Installieren</p>
-		<pre><code>npm install -g browserify</code></pre>
-
-		<p>Generieren</p>
-		<pre><code>browserify main.js -o bundle.js</code></pre>
-
-		<p>Einbetten</p>
-		<pre><code class="html xml">&lt;script src="bundle.js"&gt;&lt;&#47;script&gt;</code></pre>
-	</section>
-	<section data-markdown>
-		## Beispiel
-
-		```
-		npm install uniq
-		```
-
-		```JavaScript
-		var uniq = require('uniq');
-		var data = [1, 2, 2, 3, 4, 5, 5, 5, 6];
-		console.log(unique(data));
-		```
-	</section>
-	<section data-markdown>
-		## Beispiel
-
-		add.js:
-		```JavaScript
-		module.exports = function(a, b) {
-			return a + b;
-		}
-		```
-
-		index.js:
-		```JavaScript
-		var add = require('./add');
-		console.log(add(3, 4)); // 7
-		```
-	</section>
-	<section data-markdown>
-		## GruntJS Integration
-		
-		```
-		npm install grunt-browserify --save-dev
-		```
-
-		Grunt Task:
-		```JavaScript
-		grunt.initConfig({
-			browserify: {
-			    dist: {
-			    	files: { 'build/module.js': ['src/scripts/**/*.js'] },
-			    	options: {
-			    		transform: ['brfs']
-			    	}
-			    }
-			}
-		});
-
-		...
-		grunt.loadNpmTasks('grunt-browserify');
-
-		```
-	</section>
-</section>
 		</div>
 	</div>
 	<script src="lib/js/head.min.js"></script>
 	<script src="js/reveal.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script>
 		// Full list of configuration options available here:
 		// https://github.com/hakimel/reveal.js#configuration
@@ -379,8 +310,6 @@
 			progress: true,
 			history: true,
 			center: true,
-			slideNumber: true,
-			mouseWheel: true,
 
 			theme: Reveal.getQueryHash().theme,
 			transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
@@ -393,6 +322,17 @@
 				{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
 			]
 		});
+
+		window.addEventListener('mousewheel', handleScroll);
+		window.addEventListener('DOMMouseScroll', handleScroll);
+
+		function handleScroll(e) {
+			e.preventDefault();
+			var delta = e.detail || -e.wheelDelta;
+
+			if (delta < 0) { Reveal.prev(); }
+			else { Reveal.next(); }
+		}
 	</script>
 </body>
 </html>
