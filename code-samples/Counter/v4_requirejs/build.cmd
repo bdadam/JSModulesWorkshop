@@ -1,0 +1,1 @@
+r.js.cmd -o .\config.js out=main.built.js
