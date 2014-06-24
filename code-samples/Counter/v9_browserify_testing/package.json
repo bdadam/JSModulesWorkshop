@@ -6,7 +6,7 @@
   "scripts": {
     "build": "browserify js/main.js -t brfs -t uglifyify -o build/main.js",
     "devbuild": "browserify js/main.js -t brfs -o build/main.js",
-    "buildtests": "browserify tests/counter.specs.js -o build/tests.js"
+    "tests": "tape tests/*.js"
   },
   "dependencies": {
     "brfs": "^1.1.1",
