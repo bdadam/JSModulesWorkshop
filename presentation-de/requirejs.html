@@ -58,3 +58,28 @@ npm install
 npm run build
 ```
 </section>
+
+<section data-markdown>
+## Testing - Jasmine
+</section>
+
+<section data-markdown>
+## 7. Übung - Einige Tests schreiben
+
+Im Browser öffen: http://localhost:3000/exercises/7/js/tests/SpecRunner.html
+
+```JavaScript
+describe('test description', function() {
+	var myModule;
+	beforeEach(function(done) {
+		require('module', function(module) {
+			myModule = module;
+		});
+	});
+
+	it('should work', function() {
+		expect(myModule).toBeDefined();
+	});
+});
+```
+</section>
