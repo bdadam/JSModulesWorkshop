@@ -418,6 +418,7 @@ define(['dependency1', 'dependency2'], function(dependency1, dependency2) {
 
 * \+ nur der wirklich nötige Code wird geladen
 * \- sehr viele Requests (Anzahl der Module + 1)
+* \- die einzelne Dateien sind per default nicht minifiziert
 </section>
 
 <section data-markdown>
@@ -458,80 +459,145 @@ describe('test description', function() {
 ```
 </section>
 
-<section>
-	<section data-markdown>
-		## Browserify
-		
-		* Compiler für Node-style CommmonJS Module
-		* Ermöglicht `require()` Aufrufe im Browser (wie in Node)
-		* Viele Node-Module können verwendet werden
-	</section>
-	<section>
-		<h2>Grundlagen</h2>
-		<p>Installieren</p>
-		<pre><code>npm install -g browserify</code></pre>
-
-		<p>Generieren</p>
-		<pre><code>browserify main.js -o bundle.js</code></pre>
-
-		<p>Einbetten</p>
-		<pre><code class="html xml">&lt;script src="bundle.js"&gt;&lt;&#47;script&gt;</code></pre>
-	</section>
-	<section data-markdown>
-		## Beispiel
-
-		```
-		npm install uniq
-		```
-
-		```JavaScript
-		var uniq = require('uniq');
-		var data = [1, 2, 2, 3, 4, 5, 5, 5, 6];
-		console.log(unique(data));
-		```
-	</section>
-	<section data-markdown>
-		## Beispiel
-
-		add.js:
-		```JavaScript
-		module.exports = function(a, b) {
-			return a + b;
-		}
-		```
-
-		index.js:
-		```JavaScript
-		var add = require('./add');
-		console.log(add(3, 4)); // 7
-		```
-	</section>
-	<section data-markdown>
-		## GruntJS Integration
-		
-		```
-		npm install grunt-browserify --save-dev
-		```
-
-		Grunt Task:
-		```JavaScript
-		grunt.initConfig({
-			browserify: {
-			    dist: {
-			    	files: { 'build/module.js': ['src/scripts/**/*.js'] },
-			    	options: {
-			    		transform: ['brfs']
-			    	}
-			    }
-			}
-		});
-
-		...
-		grunt.loadNpmTasks('grunt-browserify');
-
-		```
-	</section>
+<section data-markdown>
+	## Browserify
+	
+	* Compiler für Node-style CommmonJS Module
+	* Ermöglicht `require()` Aufrufe im Browser (wie in Node)
+	* Viele Node-Module können verwendet werden
 </section>
+
+<section data-markdown>
+## CommonJS Module
+
+```JavaScript
+var mymodule = require('mymodule'); // mymodule wird synchron geladen
+var other = require('./otherModule');
+var Constructor = require('./aConstructorModule');
+
+var x = new Constructor();
+```
+
+```JavaScript
+// otherModule.js
+
+module.exports = {
+	doSomething: function() {},
+	variable: 5
+};
+```
+</section>
+
+<section data-markdown>
+## CommonJS Module
+
+```JavaScript
+module.exports = {
+	doSomething: function() {},
+	variable: 5
+};
+```
+</section>
+
+<section>
+	<h2>Grundlagen</h2>
+	<p>Installieren</p>
+	<pre><code>npm install -g browserify</code></pre>
+
+	<p>Generieren</p>
+	<pre><code>browserify main.js -o bundle.js</code></pre>
+
+	<p>Einbetten</p>
+	<pre><code class="html xml">&lt;script src="bundle.js"&gt;&lt;&#47;script&gt;</code></pre>
+</section>
+<section data-markdown>
+## Beispiel
+
+```
+npm install uniq
+```
+
+```JavaScript
+var uniq = require('uniq');
+var data = [1, 2, 2, 3, 4, 5, 5, 5, 6];
+console.log(unique(data));
+```
+</section>
+<section data-markdown>
+## Beispiel
+
+add.js:
+```JavaScript
+module.exports = function(a, b) {
+	return a + b;
+};
+```
+
+index.js:
+```JavaScript
+var add = require('./add');
+console.log(add(3, 4)); // 7
+```
+</section>
+
+<section data-markdown>
+## 8. Übung - Ausprobieren
+
+```
+cd path/to/exercises/8
+npm install
+npm run build
+```
+</section>
+
+<section data-markdown>
+## Transforms
+
+* Browserify unterstützt viele Transformationen
+  * Optimization (uglifyify)
+  * brfs (include text files)
+  * coffeeify (Coffee Script)
+  * hbsfy (Handlebars Templates)
+  * es6ify
+  * ...
+</section>
+
+<section data-markdown>
+## 9. Übung - File optimieren a.k.a. uglifyify
+
+```
+cd path/to/exercises/9
+npm install
+npm run build
+```
+</section>
+
+<section data-markdown>
+## GruntJS Integration
+
+```
+npm install grunt-browserify --save-dev
+```
+
+Grunt Task:
+```JavaScript
+grunt.initConfig({
+	browserify: {
+	    dist: {
+	    	files: { 'build/module.js': ['src/scripts/**/*.js'] },
+	    	options: {
+	    		transform: ['brfs']
+	    	}
+	    }
+	}
+});
+
+...
+grunt.loadNpmTasks('grunt-browserify');
+
+```
+</section>
+
 		</div>
 	</div>
 	<script src="lib/js/head.min.js"></script>

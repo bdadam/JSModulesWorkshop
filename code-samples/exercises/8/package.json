@@ -1,0 +1,13 @@
+{
+  "name": "v7_browserify_basic",
+  "version": "0.0.0",
+  "author": "Adam Beres-Deak",
+  "private": true,
+  "scripts": {
+    "build": "browserify js/main.js -o build/main.js"
+  },
+  "dependencies": {
+    "browserify": "^4.1.11",
+    "jquery": "^2.1.1"
+  }
+}
