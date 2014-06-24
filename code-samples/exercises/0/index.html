@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Counter Example</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<style>
+		body { padding-top: 50px; }
+		[data-counter-value] {
+			font-weight: bold;
+			font-size: 60px;
+			text-align: center;
+			padding: 32px 0;
+		}
+
+		.row {
+			margin-bottom: 32px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Counter</h1>
+		<hr/>
+
+		<div class="row">
+			<div data-counter-value></div>
+		</div>
+		<hr/>
+
+		<div class="row">
+			<div class="col-xs-6">
+				<button class="btn btn-lg btn-success btn-block" data-inc>+1</button>
+			</div>
+			<div class="col-xs-6">
+				<button class="btn btn-lg btn-danger btn-block" data-dec>-1</button>
+			</div>
+		</div>
+		<hr/>
+
+		<div class="row" style="text-align: center;">
+			<button class="btn btn-lg btn-default" data-reset>Reset</button>
+		</div>
+	</div>
+
+	<script src="js/jquery.min.js"></script>
+	<script>
+		var counter = (function() {
+		}());
+
+		var ui = (function() {
+			
+			function update() {
+				$('[data-counter-value]').html(counter.getValue());
+			}
+
+			function init() {
+				$('[data-inc]').click(function() {
+					counter.inc();
+					update();
+				});
+
+				$('[data-dec]').click(function() {
+					counter.dec();
+					update();
+				});
+
+				$('[data-reset]').click(function() {
+					counter.reset();
+					update();
+				});
+			}
+
+			return {
+				init: init,
+				update: update
+			};
+		}());
+
+
+		(function() {
+			ui.init();
+			ui.update();
+			counter.reset();
+		}());
+	</script>
+</body>
+</html>

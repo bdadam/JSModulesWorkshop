@@ -1,0 +1,60 @@
+<section data-markdown>
+## RequireJS
+</section>
+
+<section data-markdown>
+## AMD - Asynchronous Module Definition
+
+```JavaScript
+define(['dependency1', 'dependency2'], function(dependency1, dependency2) {
+	// do something with dependencies
+});
+```
+</section>
+
+<section data-markdown>
+## Alternative Syntax
+
+```JavaScript
+define(function (require) {
+    var dependency1 = require('dependency1'),
+        dependency2 = require('dependency2');
+
+    return ...;
+});
+```
+</section>
+
+<section data-markdown>
+## 4. Übung - AMD und RequireJS einführen
+
+```JavaScript
+define(['dependency1', 'dependency2'], function(dependency1, dependency2) {
+	// do something with dependencies
+});
+```
+</section>
+
+<section data-markdown>
+## 5. Übung - Wir wollen auch HTML mitliefern
+</section>
+
+<section data-markdown>
+## Performance
+
+* \+ nur der wirklich nötige Code wird geladen
+* \- sehr viele Requests (Anzahl der Module + 1)
+</section>
+
+<section data-markdown>
+## Der `r.js` Optimizer
+</section>
+
+<section data-markdown>
+## 6. Übung - Optimizer ausprobieren
+```
+cd path/to/exercies/6
+npm install
+npm run build
+```
+</section>

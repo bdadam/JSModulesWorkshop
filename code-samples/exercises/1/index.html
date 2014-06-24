@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Counter Example</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<style>
+		body { padding-top: 50px; }
+		[data-counter-value] {
+			font-weight: bold;
+			font-size: 60px;
+			text-align: center;
+			padding: 32px 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Counter</h1>
+		<hr/>
+
+		<div class="row">
+			<div data-counter-value></div>
+		</div>
+		<hr/>
+
+		<div class="row">
+			<div class="col-xs-3">
+				<button class="btn btn-lg btn-success btn-block" data-inc="5">+5</button>
+			</div>
+			<div class="col-xs-3">
+				<button class="btn btn-lg btn-success btn-block" data-inc>+1</button>
+			</div>
+			<div class="col-xs-3">
+				<button class="btn btn-lg btn-danger btn-block" data-dec>-1</button>
+			</div>
+			<div class="col-xs-3">
+				<button class="btn btn-lg btn-danger btn-block" data-dec="5">-5</button>
+			</div>
+		</div>
+		<hr/>
+
+		<div class="row">
+			<form class="form-inline" style="text-align: center;" data-custom-increment>
+				<div class="form-group">
+    				<input type="text" class="form-control input-lg" placeholder="Value">
+  				</div>
+  				<button type="submit" class="btn btn-default btn-lg">Increment by value</button>
+			</form>
+		</div>
+		<hr/>
+
+		<div class="row" style="text-align: center;">
+			<button class="btn btn-lg btn-default" data-reset>Reset</button>
+		</div>
+	</div>
+
+	<script src="js/jquery.min.js"></script>
+	<script>
+		var parser = TODO;
+
+		var counter = (function() {
+			var ctr = 0;
+
+			return {
+				inc: function(value) {
+					ctr += (parser.parseNumber(value) || 1);
+				},
+
+				dec: function(value) {
+					ctr -= (parser.parseNumber(value) || 1);
+				},
+
+				reset: function() {
+					ctr = 0;
+				},
+
+				getValue: function() {
+					return ctr.toFixed(2);
+				}
+			};
+		}());
+
+		var ui = (function() {
+			
+			function update() {
+				$('[data-counter-value]').html(counter.getValue());
+			}
+
+			function init() {
+				$('[data-inc]').click(function() {
+					var value = $(this).data('inc');
+					counter.inc(value);
+					update();
+				});
+
+				$('[data-dec]').click(function() {
+					var value = $(this).data('dec');
+					counter.dec(value);
+					update();
+				});
+
+				$('[data-custom-increment]').submit(function() {
+					var value = $(this).find('input').val();
+					counter.inc(value);
+					update();
+
+					return false;
+				});
+
+				$('[data-reset]').click(function() {
+					counter.reset();
+					update();
+				});
+			}
+
+			return {
+				init: init,
+				update: update
+			};
+		}());
+
+
+		(function() {
+			ui.init();
+			ui.update();
+			counter.reset();
+		}());
+	</script>
+</body>
+</html>

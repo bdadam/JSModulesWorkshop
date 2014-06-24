@@ -1,0 +1,12 @@
+{
+  "name": "v6_requirejs_optimizer",
+  "version": "0.0.0",
+  "author": "Adam Beres-Deak",
+  "private": true,
+  "scripts": {
+    "build": "r.js.cmd -o js/config.js out=build/main.built.js"
+  },
+  "dependencies": {
+    "requirejs": "^2.1.14"
+  }
+}

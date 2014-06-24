@@ -1,111 +1,189 @@
 <section>
-	<section>
-		<h2>Warum modularisieren?</h2>
-	</section>
-	<section>
-		<img src="img/elephant.jpg">
-		<h2>How to eat an elephant?</h2>
-	</section>
-	<section>
-		<img src="img/one-bite.jpg">
-	</section>
+	<h2>Warum modularisieren?</h2>
 </section>
 <section>
-	<section>
-		<h4>1. Übung</h2>
-		<h2>Wie viele und welche Module gibt es in dieser Web App?</h2>
-	</section>
-	<section>
-		TODO: SCREENSHOT
-	</section>
-	<section>
-		<h2>Einige Module</h2>
-		<ul>
-			<li>Templating</li>
-			<li>Die Liste von Produkten</li>
-			<li>Die Items in der Liste</li>
-			<li>Sortierung</li>
-			<li>Filter</li>
-			<li>Shopping Cart</li>
-			<li>Mini Shopping Cart</li>
-			<li>Währungsauswahl</li>
-			<li>Länderauswahl</li>
-			<li>...</li>
-		</ul>
-	</section>
-	<section>
-		TODO: SCREENSHOT
-	</section>
-	<section>
-		<h2>Was ist eine Module?</h2>
-	</section>
-	<section>
-		<h2>Eine Module</h2>
-		<ul>
-			<li>ein Stück Code</li>
-			<li>ist eine wertvolle Einheit</li>
-			<li>macht eine Sache</li>
-			<li>ist möglicherweise klein</li>
-			<li>kann andere Module als Abhängigkeit verlangen</li>
-		</ul>
-	</section>
+	<img src="img/elephant.jpg">
+	<h2>How to eat an elephant?</h2>
 </section>
 <section>
-	<section>
-		<h2>The Module Pattern</h2>
-	</section>
-	<section data-markdown>
-		```JavaScript
-		MyProject = {};
-		MyProject.MyModule = function() {
-			var privateVariable = 42;
-			function privateFunction() { return privateVariable; }
-
-			return {
-				addTo42: function(x) {
-					var sum = x + privateFunction();
-					console.log(sum);
-					return sum;
-				}
-			};
-		}();
-
-		MyProject.MyModule.addTo42(7); // 49
-		```
-	</section>
-	<section data-markdown>
-		```JavaScript
-		MyProject = {};
-
-		MyProject.MyConstructor = function() {
-			var privateValue = 42;
-
-			function Constructor(x) { this.x = privateValue + x; }
-
-			Constructor.prototype.add = function(value) {
-				this.x += value;
-				console.log(this.x);
-			};
-
-			return Constructor;
-		}();
-
-		var item = new MyProject.MyConstructor(13);
-		item.add(17); // 72
-		```
-	</section>
+	<img src="img/one-bite.jpg">
+</section>
 </section>
 <section>
-	<section><h2>PubSub</h2></section>
-	<section>
-		Module sind unabhängig
-	</section>
+	<h2>Welche clientseitige Module gibt es in einem Webshop?</h2>
+	<img src="img/amazon.png">
+</section>
+<section data-markdown>
+	* Navigation, Menüs
+	* Produktfilter
+	* Sortieren
+	* Suche
+	* Warenkorb
+	* Merkzettel, Wunschzettel
+	* Produktliste - dynamisches Laden
+	* Werbung
+	* Tracking
+	* Templating
+	* Frameworks
+	* ...
+	</ul>
 </section>
 <section>
-	<section>Namespaces</section>
-	<section></section>
+	<h2>Was ist eine Module?</h2>
 </section>
 <section>
+	<h2>Eine Module</h2>
+	<ul>
+		<li>ein Stück Code</li>
+		<li>ist eine wertvolle Einheit</li>
+		<li>kann andere Module verwenden (dependency)</li>
+		<li>macht eine Sache</li>
+		<li>ist möglicherweise klein</li>
+	</ul>
+</section>
+<section>
+	<h2>The Module Pattern</h2>
+</section>
+<section data-markdown>
+## Global namespace pollution
+
+```JavaScript
+var myVariable = 1234;
+function myFunction() {
+	// do something
+}
+```
+</section>
+<section data-markdown>
+## So ist alles sauber
+
+```JavaScript
+(function() {
+	// Immediately-Invoked Function Expression
+	// No global namespace pollution
+	
+	var myVariable = 1234;
+
+	function myFunction() {
+		// do something
+	}
+}());
+```
+</section>
+<section data-markdown>
+## Module Pattern
+
+```JavaScript
+var module = function() {
+	var privateVariable = 42;
+	function privateFunction() { return privateVariable; }
+
+	return {
+		addTo42: function(x) {
+			var sum = x + privateFunction();
+			console.log(sum);
+			return sum;
+		}
+	};
+}();
+
+module.addTo42(7); // 49
+```
+</section>
+<section data-markdown>
+## Revealing Module Pattern
+```JavaScript
+var module = (function() {
+	function doSomePrivateThing() {};
+
+	function doThisPublicThing() {
+		doSomePrivateThing();
+	}
+
+	return {
+		doThisPublicThing: doThisPublicThing
+	};
+}());
+```
+</section>
+<section data-markdown>
+## 0. Übung - Schreiben wir einen Zähler!
+
+```JavaScript
+var counter = (function() {
+}());
+
+/*
+Public API:
+* module.inc()
+* module.dec()
+* module.reset()
+* module.getValue()
+*/
+```
+</section>
+<section data-markdown>
+## 1. Übung - Wir brauchen einen Parser
+
+```JavaScript
+var parser = TODO;
+...
+parser.parseNumber(1); // 1
+parser.parseNumber(1.2345); // 1.2345
+parser.parseNumber(6); // 6
+parser.parseNumber('five'); // 5
+```
+</section>
+<section data-markdown>
+## PubSub Pattern - a.k.a. Event Aggregator
+</section>
+<section data-markdown>
+## 2. Übung - Delta anzeigen
+
+```JavaScript
+PubSub.publish(channel, payload);
+
+PubSub.subscribe(channel, function(payload) {});
+
+PubSub.subscribe('userLoggedIn', function(user) {
+	alert('Hello ' + user.firstName);
+});
+
+// later...
+
+PubSub.publish('userLoggedIn', {
+	firstName: 'Jane', lastName: 'Doe'
+});
+```
+</section>
+
+<section data-markdown>
+## Global Namespace Pollution
+
+zu viele globale Variable
+
+```JavaScript
+var parser = ...
+var counter = ...
+var ui = ...
+var delta = ...
+```
+</section>
+<section data-markdown>
+## 3. Übung - Unsere App kriegt einen eigenen Namespace
+
+```JavaScript
+namespace('mycompany.myapp');
+
+mycompany.myapp.parser = ...
+mycompany.myapp.counter = ...
+```
+</section>
+
+
+
+
+<!--section>
 	<section>RequireJS im Browser</section>
 </section>
 <section>
@@ -184,4 +262,4 @@
 
 		```
 	</section>
-</section>
+</section-->

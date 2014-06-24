@@ -35,18 +35,7 @@
 	<p><a target="_blank" href="http://bdadam.com">Adam Beres-Deak</a> / <a target="_blank" href="http://twitter.com/bdadamm">@bdadamm</a></p>
 </section>
 
-<section id="about">
-	<h1>Adam Beres-Deak</h1>
-	<p><a target="_blank" href="http://bdadam.com">bdadam.com</a> / <a target="_blank" href="http://twitter.com/bdadamm">@bdadamm</a></p>
-	<hr/>
-	<ul>
-		<li>ich entwickle am Liebsten in JavaScript</li>
-		<li>außer JS arbeite ich mit ASP.Net/C#, Python</li>
-		<li>ich arbeite bei <a href="http://werkstatt.autoscout24.de/">AutoScout24 (Werkstattportal)</a></li>
-	</ul>
-</section>
-
-<section id="install" data-markdown>
+<section data-markdown>
 	## Bevor wir starten...
 	
 	* bitte Node.js installieren - [nodejs.org](http://nodejs.org/)
@@ -61,20 +50,36 @@
 	1.4.9
 	```
 </section>
+
+<section data-markdown>
+	## Lokaler Webserver
+
+	* um die Codebeispiele auszuprobieren, jeder sollte am Besten einen lokalen Webserver am Laufen haben
+	* ich empfehle serve (`npm install -g serve`)
+</section>
+
+<section>
+	<h1>Adam Beres-Deak</h1>
+	<p><a target="_blank" href="http://bdadam.com">bdadam.com</a> / <a target="_blank" href="http://twitter.com/bdadamm">@bdadamm</a></p>
+	<hr/>
+	<ul>
+		<li>ich entwickle am Liebsten in JavaScript</li>
+		<li>außer JS arbeite ich mit ASP.Net/C#, Python</li>
+		<li>ich arbeite bei <a href="http://werkstatt.autoscout24.de/">AutoScout24 (Werkstattportal)</a></li>
+	</ul>
+</section>
+
 <section>
 	<section><h2>Agenda</h2></section>
 	
 	<section>
 		<h2>Module</h2>
 		<ul>
-			<li>Warum modularisieren?</li>
+			<li>Warum sollte man modularisieren?</li>
 			<li>Was ist eine Module?</li>
-			<li>Übung: Wie viele Module kann man sehen?</li>
-			<li>Global Namespace</li>
-			<li>Global Object</li>
+			<li>Globale Objekte, Namespace</li>
 			<li>Module Pattern</li>
 			<li>PubSub - Module voneinander entkoppeln</li>
-			<li>Übung: TODO</li>
 		</ul>
 	</section>
 
@@ -82,10 +87,7 @@
 		<h2>RequireJS</h2>
 		<ul>
 			<li>AMD - Asynchronous Module Definition</li>
-			<li>Übung: TODO</li>
-			<li>Kommandozeilentool</li>
 			<li>Buildintegration mit GruntJS</li>
-			<li>Übung: TODO</li>
 			<li>Testing</li>
 		</ul>
 	</section>
@@ -106,113 +108,191 @@
 	</section>
 </section>
 <section>
-	<section>
-		<h2>Warum modularisieren?</h2>
-	</section>
-	<section>
-		<img src="img/elephant.jpg">
-		<h2>How to eat an elephant?</h2>
-	</section>
-	<section>
-		<img src="img/one-bite.jpg">
-	</section>
+	<h2>Warum modularisieren?</h2>
 </section>
 <section>
-	<section>
-		<h4>1. Übung</h2>
-		<h2>Wie viele und welche Module gibt es in dieser Web App?</h2>
-	</section>
-	<section>
-		TODO: SCREENSHOT
-	</section>
-	<section>
-		<h2>Einige Module</h2>
-		<ul>
-			<li>Templating</li>
-			<li>Die Liste von Produkten</li>
-			<li>Die Items in der Liste</li>
-			<li>Sortierung</li>
-			<li>Filter</li>
-			<li>Shopping Cart</li>
-			<li>Mini Shopping Cart</li>
-			<li>Währungsauswahl</li>
-			<li>Länderauswahl</li>
-			<li>...</li>
-		</ul>
-	</section>
-	<section>
-		TODO: SCREENSHOT
-	</section>
-	<section>
-		<h2>Was ist eine Module?</h2>
-	</section>
-	<section>
-		<h2>Eine Module</h2>
-		<ul>
-			<li>ein Stück Code</li>
-			<li>ist eine wertvolle Einheit</li>
-			<li>macht eine Sache</li>
-			<li>ist möglicherweise klein</li>
-			<li>kann andere Module als Abhängigkeit verlangen</li>
-		</ul>
-	</section>
+	<img src="img/elephant.jpg">
+	<h2>How to eat an elephant?</h2>
 </section>
 <section>
-	<section>
-		<h2>The Module Pattern</h2>
-	</section>
-	<section data-markdown>
-		```JavaScript
-		MyProject = {};
-		MyProject.MyModule = function() {
-			var privateVariable = 42;
-			function privateFunction() { return privateVariable; }
-
-			return {
-				addTo42: function(x) {
-					var sum = x + privateFunction();
-					console.log(sum);
-					return sum;
-				}
-			};
-		}();
-
-		MyProject.MyModule.addTo42(7); // 49
-		```
-	</section>
-	<section data-markdown>
-		```JavaScript
-		MyProject = {};
-
-		MyProject.MyConstructor = function() {
-			var privateValue = 42;
-
-			function Constructor(x) { this.x = privateValue + x; }
-
-			Constructor.prototype.add = function(value) {
-				this.x += value;
-				console.log(this.x);
-			};
-
-			return Constructor;
-		}();
-
-		var item = new MyProject.MyConstructor(13);
-		item.add(17); // 72
-		```
-	</section>
+	<img src="img/one-bite.jpg">
+</section>
 </section>
 <section>
-	<section><h2>PubSub</h2></section>
-	<section>
-		Module sind unabhängig
-	</section>
+	<h2>Welche clientseitige Module gibt es in einem Webshop?</h2>
+	<img src="img/amazon.png">
+</section>
+<section data-markdown>
+	* Navigation, Menüs
+	* Produktfilter
+	* Sortieren
+	* Suche
+	* Warenkorb
+	* Merkzettel, Wunschzettel
+	* Produktliste - dynamisches Laden
+	* Werbung
+	* Tracking
+	* Templating
+	* Frameworks
+	* ...
+	</ul>
 </section>
 <section>
-	<section>Namespaces</section>
-	<section></section>
+	<h2>Was ist eine Module?</h2>
 </section>
 <section>
+	<h2>Eine Module</h2>
+	<ul>
+		<li>ein Stück Code</li>
+		<li>ist eine wertvolle Einheit</li>
+		<li>kann andere Module verwenden (dependency)</li>
+		<li>macht eine Sache</li>
+		<li>ist möglicherweise klein</li>
+	</ul>
+</section>
+<section>
+	<h2>The Module Pattern</h2>
+</section>
+<section data-markdown>
+## Global namespace pollution
+
+```JavaScript
+var myVariable = 1234;
+function myFunction() {
+	// do something
+}
+```
+</section>
+<section data-markdown>
+## So ist alles sauber
+
+```JavaScript
+(function() {
+	// Immediately-Invoked Function Expression
+	// No global namespace pollution
+	
+	var myVariable = 1234;
+
+	function myFunction() {
+		// do something
+	}
+}());
+```
+</section>
+<section data-markdown>
+## Module Pattern
+
+```JavaScript
+var module = function() {
+	var privateVariable = 42;
+	function privateFunction() { return privateVariable; }
+
+	return {
+		addTo42: function(x) {
+			var sum = x + privateFunction();
+			console.log(sum);
+			return sum;
+		}
+	};
+}();
+
+module.addTo42(7); // 49
+```
+</section>
+<section data-markdown>
+## Revealing Module Pattern
+```JavaScript
+var module = (function() {
+	function doSomePrivateThing() {};
+
+	function doThisPublicThing() {
+		doSomePrivateThing();
+	}
+
+	return {
+		doThisPublicThing: doThisPublicThing
+	};
+}());
+```
+</section>
+<section data-markdown>
+## 0. Übung - Schreiben wir einen Zähler!
+
+```JavaScript
+var counter = (function() {
+}());
+
+/*
+Public API:
+* module.inc()
+* module.dec()
+* module.reset()
+* module.getValue()
+*/
+```
+</section>
+<section data-markdown>
+## 1. Übung - Wir brauchen einen Parser
+
+```JavaScript
+var parser = TODO;
+...
+parser.parseNumber(1); // 1
+parser.parseNumber(1.2345); // 1.2345
+parser.parseNumber(6); // 6
+parser.parseNumber('five'); // 5
+```
+</section>
+<section data-markdown>
+## PubSub Pattern - a.k.a. Event Aggregator
+</section>
+<section data-markdown>
+## 2. Übung - Delta anzeigen
+
+```JavaScript
+PubSub.publish(channel, payload);
+
+PubSub.subscribe(channel, function(payload) {});
+
+PubSub.subscribe('userLoggedIn', function(user) {
+	alert('Hello ' + user.firstName);
+});
+
+// later...
+
+PubSub.publish('userLoggedIn', {
+	firstName: 'Jane', lastName: 'Doe'
+});
+```
+</section>
+
+<section data-markdown>
+## Global Namespace Pollution
+
+zu viele globale Variable
+
+```JavaScript
+var parser = ...
+var counter = ...
+var ui = ...
+var delta = ...
+```
+</section>
+<section data-markdown>
+## 3. Übung - Unsere App kriegt einen eigenen Namespace
+
+```JavaScript
+namespace('mycompany.myapp');
+
+mycompany.myapp.parser = ...
+mycompany.myapp.counter = ...
+```
+</section>
+
+
+
+
+<!--section>
 	<section>RequireJS im Browser</section>
 </section>
 <section>
@@ -291,6 +371,66 @@
 
 		```
 	</section>
+</section-->
+<section data-markdown>
+## RequireJS
+</section>
+
+<section data-markdown>
+## AMD - Asynchronous Module Definition
+
+```JavaScript
+define(['dependency1', 'dependency2'], function(dependency1, dependency2) {
+	// do something with dependencies
+});
+```
+</section>
+
+<section data-markdown>
+## Alternative Syntax
+
+```JavaScript
+define(function (require) {
+    var dependency1 = require('dependency1'),
+        dependency2 = require('dependency2');
+
+    return ...;
+});
+```
+</section>
+
+<section data-markdown>
+## 4. Übung - AMD und RequireJS einführen
+
+```JavaScript
+define(['dependency1', 'dependency2'], function(dependency1, dependency2) {
+	// do something with dependencies
+});
+```
+</section>
+
+<section data-markdown>
+## 5. Übung - Wir wollen auch HTML mitliefern
+</section>
+
+<section data-markdown>
+## Performance
+
+* \+ nur der wirklich nötige Code wird geladen
+* \- sehr viele Requests (Anzahl der Module + 1)
+</section>
+
+<section data-markdown>
+## Der `r.js` Optimizer
+</section>
+
+<section data-markdown>
+## 6. Übung - Optimizer ausprobieren
+```
+cd path/to/exercies/6
+npm install
+npm run build
+```
 </section>
 
 <section>
