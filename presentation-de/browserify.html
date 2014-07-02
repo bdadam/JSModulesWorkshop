@@ -101,27 +101,12 @@ npm run build
 </section>
 
 <section data-markdown>
-## GruntJS Integration
+## 9.a Übung - GruntJS Integration
 
 ```
-npm install grunt-browserify --save-dev
-```
-
-Grunt Task:
-```JavaScript
-grunt.initConfig({
-	browserify: {
-	    dist: {
-	    	files: { 'build/module.js': ['src/scripts/**/*.js'] },
-	    	options: {
-	    		transform: ['brfs']
-	    	}
-	    }
-	}
-});
-
-...
-grunt.loadNpmTasks('grunt-browserify');
-
+cd path/to/exercises/9_grunt
+npm install
+grunt browserify
+# or grunt watch
 ```
 </section>

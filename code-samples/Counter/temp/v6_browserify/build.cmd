@@ -1,1 +1,0 @@
-browserify.cmd .\main.js -o main.built.js

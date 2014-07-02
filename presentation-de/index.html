@@ -58,6 +58,12 @@
 	* ich empfehle serve (`npm install -g serve`)
 </section>
 
+<section data-markdown>
+    ## Bitte die übungen runterladen
+
+    http://bit.ly/ejs2014-jsmodules
+</section>
+
 <section>
 	<h1>Adam Beres-Deak</h1>
 	<p><a target="_blank" href="http://bdadam.com">bdadam.com</a> / <a target="_blank" href="http://twitter.com/bdadamm">@bdadamm</a></p>
@@ -69,37 +75,35 @@
 	</ul>
 </section>
 
-<section>
-	<section data-markdown>
-		## Agenda
-	</section>
-	<section data-markdown>
-		## Modularisierung
+<section data-markdown>
+    ## Agenda
+</section>
+<section data-markdown>
+    ## Modularisierung
 
-		* Warum sollte man modularisieren?
-		* Was ist eine Module?
-		* Module Pattern
-		* PubSub Pattern
-	</section>
-	<section data-markdown>
-		## RequireJS
+    * Warum sollte man modularisieren?
+    * Was ist eine Module?
+    * Module Pattern
+    * PubSub Pattern
+</section>
+<section data-markdown>
+    ## RequireJS
 
-		* AMD - Asynchronous Module Definition
-		* Was ist RequireJS?
-		* Plugins
-		* Performance
-		* Optimizer
-		* Testing
-	</section>
-	<section data-markdown>
-		## Browserify
+    * AMD - Asynchronous Module Definition
+    * Was ist RequireJS?
+    * Plugins
+    * Performance
+    * Optimizer
+    * Testing
+</section>
+<section data-markdown>
+    ## Browserify
 
-		* CommonJS Module
-		* Was ist Browserify?
-		* Benutzung
-		* Transformationen
-		* GruntJS Integration
-	</section>
+    * CommonJS Module
+    * Was ist Browserify?
+    * Benutzung
+    * Transformationen
+    * GruntJS Integration
 </section>
 
 <section>
@@ -352,6 +356,16 @@ npm run build
 </section>
 
 <section data-markdown>
+## 6.a Übung - GruntJS Integration
+```
+cd path/to/exercies/6_grunt
+npm install
+grunt browserify
+# or grunt watch
+```
+</section>
+
+<section data-markdown>
 ## Testing - Jasmine
 </section>
 
@@ -479,31 +493,21 @@ npm run build
 </section>
 
 <section data-markdown>
-## GruntJS Integration
+## 9.a Übung - GruntJS Integration
 
 ```
-npm install grunt-browserify --save-dev
-```
-
-Grunt Task:
-```JavaScript
-grunt.initConfig({
-	browserify: {
-	    dist: {
-	    	files: { 'build/module.js': ['src/scripts/**/*.js'] },
-	    	options: {
-	    		transform: ['brfs']
-	    	}
-	    }
-	}
-});
-
-...
-grunt.loadNpmTasks('grunt-browserify');
-
+cd path/to/exercises/9_grunt
+npm install
+grunt browserify
+# or grunt watch
 ```
 </section>
 
+<section data-markdown>
+    ## Die Lösungen
+
+    http://bit.ly/ejs2014-jsmodules-solutions
+</section>
 <section data-markdown>
 ## Was haben wir heute gesehen?
 
